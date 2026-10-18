@@ -1,0 +1,14 @@
+.page-content {
+    display: none;
+}
+
+.page-content.active {
+    display: block;
+}
+
+.academic-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+

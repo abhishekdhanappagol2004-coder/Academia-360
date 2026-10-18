@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SARMS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="sidebar-header">Admin Dashboard</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-page="dashboard">
+                        <span class="nav-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="users">
+                        <span class="nav-icon">👥</span>
+                        <span>Manage Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="institutions">
+                        <span class="nav-icon">🏫</span>
+                        <span>Manage Institutions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="reports">
+                        <span class="nav-icon">📊</span>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page-content active">
+                <div class="page-header">
+                    <div class="page-title">Admin Dashboard</div>
+                    <div class="page-subtitle">Manage users, institutions, and generate reports</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">System Overview</div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px;">
+                        <div style="text-align: center; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+                            <div style="font-size: 32px; font-weight: bold; color: #667eea;" id="total-users">-</div>
+                            <div style="color: #666; margin-top: 10px;">Total Users</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+                            <div style="font-size: 32px; font-weight: bold; color: #4CAF50;" id="total-students">-</div>
+                            <div style="color: #666; margin-top: 10px;">Students</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+                            <div style="font-size: 32px; font-weight: bold; color: #FF9800;" id="total-institutions">-</div>
+                            <div style="color: #666; margin-top: 10px;">Institutions</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+                            <div style="font-size: 32px; font-weight: bold; color: #9C27B0;" id="avg-attendance">-</div>
+                            <div style="color: #666; margin-top: 10px;">Avg Attendance</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Users Page -->
+            <div id="users-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Manage Users</div>
+                </div>
+                <div class="card">
+                    <div id="users-list">
+                        <p>Loading users...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Institutions Page -->
+            <div id="institutions-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Manage Institutions</div>
+                </div>
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3>Add Institution</h3>
+                    <form id="add-institution-form">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label>Institution Name *</label>
+                                <input type="text" name="name" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Type *</label>
+                                <select name="type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="School">School</option>
+                                    <option value="PU">PU</option>
+                                    <option value="College">College</option>
+                                    <option value="University">University</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Address</label>
+                                <textarea name="address" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Institution</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>All Institutions</h3>
+                    <div id="institutions-list">
+                        <p>Loading institutions...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reports Page -->
+            <div id="reports-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">System Reports</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Consolidated Academic Report</div>
+                    <div id="report-content">
+                        <p>Loading report...</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateReport()" style="margin-top: 20px;">Generate Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARMS - Student Academic Record Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+    <div class="auth-shell">
+        <section class="brand-panel">
+            <header>
+                <div class="brand-badge">SARMS</div>
+                <h1>Academia 360</h1>
+                <p>Securely manage admissions, attendance, academics, and analytics with a modern workspace for institutions of every scale.</p>
+            </header>
+
+            <div class="brand-metrics">
+                <article class="metric-card">
+                    <span>Families Served</span>
+                    <strong>2,400+</strong>
+                    <small>Across K-12, PU & Degree schools</small>
+                </article>
+                <article class="metric-card">
+                    <span>Processing Time</span>
+                    <strong>-65%</strong>
+                    <small>Less time spent on manual reporting</small>
+                </article>
+            </div>
+
+            <ul class="brand-points">
+                <li>Unified timeline from 1st grade to graduation</li>
+                <li>Instant attendance, marks, and performance insights</li>
+                <li>Secure login for students, faculty, and admin teams</li>
+            </ul>
+        </section>
+
+        <section class="auth-panel">
+            <div class="auth-header">
+                <div>
+                    <p class="eyebrow">Welcome back</p>
+                    <h2>Sign in to Academia 360</h2>
+                </div>
+                <span class="release-pill">v2.1</span>
+            </div>
+
+            <div class="role-selector">
+                <button class="role-btn active" data-role="student">Student</button>
+                <button class="role-btn" data-role="faculty">Faculty</button>
+                <button class="role-btn" data-role="admin">Admin</button>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <label class="input-field">
+                    <span>Email Address</span>
+                    <input type="email" id="email" name="email" placeholder="jane.smith@sarms.com" required>
+                </label>
+                
+                <label class="input-field">
+                    <span>Password</span>
+                    <div class="input-addon">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">👁</button>
+                    </div>
+                </label>
+                
+                <div class="form-meta">
+                    <a href="#" class="text-link">Forgot password?</a>
+                </div>
+                
+                <div class="form-actions" style="display: flex; gap: 10px;">
+                    <button type="submit" class="primary-btn" style="flex: 1;">Sign in</button>
+                    <button type="button" id="showSignupBtn" class="primary-btn" style="flex: 1; display: flex;">Sign up</button>
+                </div>
+            </form>
+
+            <!-- Sign Up Form (initially hidden) -->
+            <form id="signupForm" class="auth-form" style="display: none;">
+                <h3>Create Student Account</h3>
+                <label class="input-field">
+                    <span>Email Address</span>
+                    <input type="email" id="signupEmail" name="email" placeholder="student@example.com" required>
+                </label>
+                
+                <label class="input-field">
+                    <span>Password</span>
+                    <div class="input-addon">
+                        <input type="password" id="signupPassword" name="password" placeholder="Create a password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('signupPassword')">👁</button>
+                    </div>
+                </label>
+                
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn" style="width: 100%;">Register</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    
+    <script>
+        // Show/hide sign up form
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const showSignupBtn = document.getElementById('showSignupBtn');
+            const backToLogin = document.getElementById('backToLogin');
+            const roleBtns = document.querySelectorAll('.role-btn');
+
+            // Toggle password visibility
+            window.togglePassword = function(inputId) {
+                const input = document.getElementById(inputId);
+                if (input.type === 'password') {
+                    input.type = 'text';
+                } else {
+                    input.type = 'password';
+                }
+            };
+
+            // Show sign up form
+            if (showSignupBtn) {
+                showSignupBtn.addEventListener('click', function() {
+                    loginForm.style.display = 'none';
+                    signupForm.style.display = 'block';
+                });
+            }
+
+            // Show login form
+            if (backToLogin) {
+                backToLogin.addEventListener('click', function() {
+                    loginForm.style.display = 'block';
+                    signupForm.style.display = 'none';
+                });
+            }
+
+            // Show sign up button for student role by default
+            const studentBtn = document.querySelector('.role-btn[data-role="student"]');
+            if (studentBtn) {
+                studentBtn.click(); // This will trigger the click handler to show the sign up button
+            }
+
+            // Handle role selection
+            roleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    roleBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show sign up button only for students
+                    const isStudent = this.dataset.role === 'student';
+                    showSignupBtn.style.display = isStudent ? 'flex' : 'none';
+                });
+            });
+
+            // Handle sign up form submission
+            if (signupForm) {
+                signupForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const email = document.getElementById('signupEmail').value;
+                    const password = document.getElementById('signupPassword').value;
+                    
+                    try {
+                        const response = await fetch('/api/auth/register', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email, password })
+                        });
+
+                        const data = await response.json();
+                        
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Registration failed');
+                        }
+                        
+                        // Show success message and switch back to login form
+                        alert('Student registered successfully! You can now log in.');
+                        loginForm.style.display = 'block';
+                        signupForm.style.display = 'none';
+                        
+                        // Clear the form
+                        signupForm.reset();
+                        
+                    } catch (error) {
+                        console.error('Registration error:', error);
+                        alert(error.message || 'Registration failed. Please try again.');
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
+

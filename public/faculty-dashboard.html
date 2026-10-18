@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - SARMS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="sidebar-header">Faculty Dashboard</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-page="dashboard">
+                        <span class="nav-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="students">
+                        <span class="nav-icon">👥</span>
+                        <span>Manage Students</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="add-student">
+                        <span class="nav-icon">➕</span>
+                        <span>Add Student</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="academic-records">
+                        <span class="nav-icon">📚</span>
+                        <span>Academic Records</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="institutions">
+                        <span class="nav-icon">🏫</span>
+                        <span>Manage Institutions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="view-records">
+                        <span class="nav-icon">📋</span>
+                        <span>View & Manage Records</span>
+                    </a>
+                </li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page-content active">
+                <div class="page-header">
+                    <div class="page-title">Faculty Dashboard</div>
+                    <div class="page-subtitle">Manage student records and academic information</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Quick Stats</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
+                        <div style="text-align: center; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+                            <div style="font-size: 32px; font-weight: bold; color: #667eea;" id="total-students">-</div>
+                            <div style="color: #666; margin-top: 10px;">Total Students</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+                            <div style="font-size: 32px; font-weight: bold; color: #4CAF50;" id="total-institutions">-</div>
+                            <div style="color: #666; margin-top: 10px;">Institutions</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+                            <div style="font-size: 32px; font-weight: bold; color: #FF9800;" id="total-records">-</div>
+                            <div style="color: #666; margin-top: 10px;">Academic Records</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Students Page -->
+            <div id="students-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Manage Students</div>
+                </div>
+                <div class="card">
+                    <div id="students-list">
+                        <p>Loading students...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add Student Page -->
+            <div id="add-student-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Add Student</div>
+                </div>
+                <div class="card">
+                    <form id="add-student-form">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label>Email Address *</label>
+                                <input type="email" name="email" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Password *</label>
+                                <input type="password" name="password" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Student ID *</label>
+                                <input type="text" name="studentId" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Student Name *</label>
+                                <input type="text" name="name" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Date of Birth *</label>
+                                <input type="date" name="dob" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Gender</label>
+                                <select name="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Address</label>
+                                <textarea name="address" rows="3"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <label>Parent/Guardian Name</label>
+                                <input type="text" name="parentName">
+                            </div>
+                            <div class="form-row">
+                                <label>Contact Number</label>
+                                <input type="text" name="contactNumber">
+                            </div>
+                            <div class="form-row">
+                                <label>Mentor Name</label>
+                                <input type="text" name="mentorName">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Add Student</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Academic Records Page -->
+            <div id="academic-records-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Add Academic Records</div>
+                </div>
+                <div class="card">
+                    <h3>Add Study Details</h3>
+                    <form id="academic-year-form" style="margin-bottom: 30px;">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label>Select Student *</label>
+                                <select id="student-select" name="studentId" required>
+                                    <option value="">Select Student</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Select Institution *</label>
+                                <select id="institution-select" name="institutionId" required>
+                                    <option value="">Select Institution</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Academic Year * (e.g., 2012-2013)</label>
+                                <input type="text" name="academicYear" placeholder="2012-2013" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Standard/Class *</label>
+                                <select name="standardClass" required>
+                                    <option value="">Select Class</option>
+                                    <option value="1st Std">1st Std</option>
+                                    <option value="2nd Std">2nd Std</option>
+                                    <option value="3rd Std">3rd Std</option>
+                                    <option value="4th Std">4th Std</option>
+                                    <option value="5th Std">5th Std</option>
+                                    <option value="6th Std">6th Std</option>
+                                    <option value="7th Std">7th Std</option>
+                                    <option value="8th Std">8th Std</option>
+                                    <option value="9th Std">9th Std</option>
+                                    <option value="10th Std">10th Std</option>
+                                    <option value="11th Std">11th Std</option>
+                                    <option value="12th Std">12th Std</option>
+                                    <option value="UG-I">UG-I</option>
+                                    <option value="UG-II">UG-II</option>
+                                    <option value="UG-III">UG-III</option>
+                                    <option value="UG-IV">UG-IV</option>
+                                    <option value="PG-I">PG-I</option>
+                                    <option value="PG-II">PG-II</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Status</label>
+                                <select name="status">
+                                    <option value="Complete">Complete</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Academic Year</button>
+                    </form>
+                    
+                    <hr style="margin: 30px 0;">
+                    
+                    <h3>Add Subjects</h3>
+                    <form id="add-subject-form" style="margin-bottom: 30px;">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label>Academic Year *</label>
+                                <select id="academic-year-select" name="academicYearId" required>
+                                    <option value="">Select Academic Year</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Subject Name *</label>
+                                <input type="text" name="subjectName" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Maximum Marks *</label>
+                                <input type="number" name="maxMarks" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Subject</button>
+                    </form>
+                    
+                    <hr style="margin: 30px 0;">
+                    
+                    <h3>Add Marks</h3>
+                    <form id="add-marks-form" style="margin-bottom: 30px;">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label>Subject *</label>
+                                <select id="subject-select" name="subjectId" required>
+                                    <option value="">Select Subject</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Internal Marks</label>
+                                <input type="number" name="internalMarks" value="0">
+                            </div>
+                            <div class="form-row">
+                                <label>Marks Obtained *</label>
+                                <input type="number" name="marksObtained" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Grade</label>
+                                <input type="text" name="grade" placeholder="A, B, C, etc.">
+                            </div>
+                            <div class="form-row">
+                                <label>Pass/Fail *</label>
+                                <select name="passFail" required>
+                                    <option value="Pass">Pass</option>
+                                    <option value="Fail">Fail</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Marks</button>
+                    </form>
+                    
+                    <hr style="margin: 30px 0;">
+                    
+                    <h3>Add Attendance</h3>
+                    <form id="add-attendance-form">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label>Select Student *</label>
+                                <select id="attendance-student-select" required>
+                                    <option value="">Select Student</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Academic Year *</label>
+                                <select id="attendance-year-select" name="academicYearId" required disabled>
+                                    <option value="">Select Academic Year</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Total Working Days *</label>
+                                <input type="number" name="totalWorkingDays" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Days Attended *</label>
+                                <input type="number" name="daysAttended" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Remarks</label>
+                                <textarea name="remarks" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Attendance</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Institutions Page -->
+            <div id="institutions-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">Manage Institutions</div>
+                </div>
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3>Add Institution</h3>
+                    <form id="add-institution-form">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label>Institution Name *</label>
+                                <input type="text" name="name" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Type *</label>
+                                <select name="type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="School">School</option>
+                                    <option value="PU">PU</option>
+                                    <option value="College">College</option>
+                                    <option value="University">University</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Address</label>
+                                <textarea name="address" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Institution</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>All Institutions</h3>
+                    <div id="institutions-list">
+                        <p>Loading institutions...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View & Manage Records Page -->
+            <div id="view-records-page" class="page-content">
+                <div class="page-header">
+                    <div class="page-title">View & Manage Records</div>
+                </div>
+                
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3>Select Student to View Records</h3>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <label>Select Student *</label>
+                            <select id="view-student-select" onchange="loadStudentRecords()">
+                                <option value="">Select Student</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="student-records-container">
+                    <p style="text-align: center; color: #666; padding: 40px;">Select a student to view their academic records</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/faculty-dashboard.js"></script>
+</body>
+</html>
+
